@@ -1,0 +1,19 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Project extends Model
+{
+     protected $fillable = [
+        'name',
+        'status',
+        'end_date',
+    ];
+    
+      public function ticket()
+    {
+        return $this->hasMany(Ticket::class);
+    }
+}
