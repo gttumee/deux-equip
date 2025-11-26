@@ -28,21 +28,21 @@ class ListTickets extends ListRecords
             '本日納品' => Tab::make()
             ->modifyQueryUsing(fn (Builder $query) => $query
             ->where('end_date', 'like', Carbon::today()->format('Y-m-d') . '%')
-            ->where('status', '!=', 'Finish')
+            ->where('status', '!=', '完了')
         )    
                 ->badge(Ticket::query()
                 ->where('end_date', 'like', Carbon::today()->format('Y-m-d') . '%')
-                ->where('status', '!=', 'Finish')->count())
+                ->where('status', '!=', '完了')->count())
                 ->badgeColor('gray'),
                 
             '明日納品' => Tab::make()
                 ->modifyQueryUsing(fn (Builder $query) => $query
                 ->where('end_date', 'like', Carbon::tomorrow()->format('Y-m-d') . '%')
-                ->where('status', '!=', 'Finish')
+                ->where('status', '!=', '完了')
                 )
                 ->badge(Ticket::query()
                 ->where('end_date', 'like', Carbon::tomorrow()->format('Y-m-d') . '%')
-                ->where('status', '!=', 'Finish')->count())
+                ->where('status', '!=', '完了')->count())
                 ->badgeColor('info'),
 
                 '今週納品' => Tab::make()
@@ -51,7 +51,7 @@ class ListTickets extends ListRecords
                 Carbon::now()->startOfWeek()->format('Y-m-d'),
                 Carbon::now()->endOfWeek()->format('Y-m-d'),
           ])
-            ->where('status', '!=', 'Finish')
+            ->where('status', '!=', '完了')
        )
               ->badge(
             Ticket::query()
@@ -59,7 +59,7 @@ class ListTickets extends ListRecords
                 Carbon::now()->startOfWeek()->format('Y-m-d'),
                 Carbon::now()->endOfWeek()->format('Y-m-d'),
             ])
-            ->where('status', '!=', 'Finish')
+            ->where('status', '!=', '完了')
             ->count()
     )
     ->badgeColor('warning'),
@@ -67,16 +67,16 @@ class ListTickets extends ListRecords
            '未完成' => Tab::make() 
                 ->modifyQueryUsing(fn (Builder $query) => $query
                 ->where('end_date', '<', now())
-                ->where('status', '!=', 'Finish'))
-                ->badge('! ' . Ticket::query()->where('end_date', '<', now())->where('status', '!=', 'Finish')->count())
+                ->where('status', '!=', '完了'))
+                ->badge('! ' . Ticket::query()->where('end_date', '<', now())->where('status', '!=', '完了')->count())
                 ->badgeColor(Ticket::query()
                     ->where('end_date', '<', Carbon::today())
-                    ->where('status', '!=', 'Finish')
+                    ->where('status', '!=', '完了')
                     ->count() > 0 ? 'danger' : 'success'),
              
             '完成' => Tab::make()
                 ->modifyQueryUsing(fn (Builder $query) => $query->where('status', 'Finish'))
-                ->badge(Ticket::query()->where('status', 'Finish')->count())
+                ->badge(Ticket::query()->where('status', '完了')->count())
                 ->badgeColor('success'),  
                 '全部' => Tab::make()
             ->badge(Ticket::query()->count()), 

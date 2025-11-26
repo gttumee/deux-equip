@@ -90,35 +90,75 @@ class TicketResource extends Resource
             ->columns([
                 TextColumn::make('name')
                 ->sortable()
-                 ->label('作業名'),
+                 ->label('作業名')->toggleable(isToggledHiddenByDefault: false)
+                ->extraAttributes(fn ( $rowLoop) => 
+                $rowLoop->even ? ['class' => 'bg-gray-100'] : []
+                ),
                 TextColumn::make('types')
                 ->sortable()
-                ->label('種類'),
-                TextColumn::make('status')
+                ->label('種類')
+                ->toggleable(isToggledHiddenByDefault: false)
+                ->extraAttributes(fn ( $rowLoop) => 
+                $rowLoop->even ? ['class' => 'bg-gray-100'] : []
+                ),
+               TextColumn::make('status')
                 ->badge()
+                ->color(fn ($record) => match ($record->status) {
+                    '新規' => 'danger',
+                    '進行中' => 'warning',
+                    '完了' => 'success',
+                })
                 ->sortable()
-                ->label('進捗状況'),
+                ->label('進捗状況')
+                ->toggleable(isToggledHiddenByDefault: false)
+                ->extraAttributes(fn($rowLoop) => 
+                    $rowLoop->even ? ['class' => 'bg-gray-100'] : []
+                ),
                 TextColumn::make('created_at')
                 ->formatStateUsing(fn($state) => \Carbon\Carbon::parse($state)->format('Y-m-d'))
                 ->sortable()
-                ->label('開始日'),
+                ->label('開始日')
+                ->toggleable(isToggledHiddenByDefault: false)
+                ->extraAttributes(fn ( $rowLoop) => 
+                $rowLoop->even ? ['class' => 'bg-gray-100'] : []
+                ),
                 TextColumn::make('end_date')
                 ->sortable()
                  ->badge()
-                ->label('終了日'),               
+                ->label('終了日')
+                ->toggleable(isToggledHiddenByDefault: false)
+                ->extraAttributes(fn ( $rowLoop) => 
+                $rowLoop->even ? ['class' => 'bg-gray-100'] : []
+                ),               
                  TextColumn::make('end_time')
                 ->sortable()
-                ->label('終了時間'),
+                ->label('終了時間')
+                ->toggleable(isToggledHiddenByDefault: false)
+                ->extraAttributes(fn ( $rowLoop) => 
+                $rowLoop->even ? ['class' => 'bg-gray-100'] : []
+                ),
                  TextColumn::make('project.name')
                 ->label('案件名')
                 ->sortable()
-                ->searchable(),
+                ->searchable()
+                ->toggleable(isToggledHiddenByDefault: false)
+                ->extraAttributes(fn ( $rowLoop) => 
+                $rowLoop->even ? ['class' => 'bg-gray-100'] : []
+                ),
                 TextColumn::make('client_name')
                 ->sortable()
-                ->label('依頼者'),
+                ->label('依頼者')
+                ->toggleable(isToggledHiddenByDefault: false)
+                ->extraAttributes(fn ( $rowLoop) => 
+                $rowLoop->even ? ['class' => 'bg-gray-100'] : []
+                ),
                 TextColumn::make('user.name')
                 ->sortable()
-                ->label('担当者'),
+                ->label('担当者')
+                ->toggleable(isToggledHiddenByDefault: false)
+                ->extraAttributes(fn ( $rowLoop) => 
+                $rowLoop->even ? ['class' => 'bg-gray-100'] : []
+                ),
                 ])
             ->filters([
                 //
